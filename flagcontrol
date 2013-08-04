@@ -1,0 +1,25 @@
+//This is for premium subscriptions
+
+//AOE HATE
+
+S EnableGroup AOE off
+
+?Exping T(100,1000) skillCoolTime($SuperiorAggression) == 0 and not isFlagged(me) : Cast $SuperiorAggression
+
+?AOE T(100,1000) skillCoolTime($SuperiorAggressionAura) == 0 and not isFlagged(me): Cast $SuperiorAggressionAura
+
+//DISABLE AOE WHEN FLAG
+
+L CharFunctor 2 (alive(actor) and isFlagged(actor) and not isMember(actor) and distance(actor)< 1000)
+
+T(500) zone~=12 and not Charsfind(2) and groupStatus("AOE") == 0 : EnableGroup AOE on
+T(500) zone~=12 and CharsFind(2) and groupStatus("AOE") == 1 : EnableGroup AOE off
+
+
+//the premium subscription MA must ALSO tell the party "start aoe" and "stop aoe"
+//the code for the party members to listen for is below
+
+
+// standard subscription code for party members
+@CreatureSay aname == (env("ma")) and text == "stop aoe" : EnableGroup AOE off
+@CreatureSay aname == (env("ma")) and text == "start aoe" : EnableGroup AOE on
